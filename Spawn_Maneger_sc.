@@ -1,0 +1,69 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Spawn_Maneger_sc : MonoBehaviour
+{
+   [SerializeField]
+   GameObject enemyPrefab;
+   [SerializeField]
+   GameObject enemyContainer;
+
+private bool _stopspawning = false;  // Oyuncu yok olduğunda spawn işlemini durdurmak için bir bayrak
+
+[SerializeField]
+GameObject tripleShotBonusPrefab;
+
+
+
+// 5 saniyede bir enemy oluşturucak
+IEnumerator SpawnEnemyRoutine()
+{
+while( _stopspawning == false )
+{
+Vector3 position = new Vector3(Random.Range(-9.4f,9.4f),7.4f,0);
+GameObject new_enemy = Instantiate(enemyPrefab,position,Quaternion.identity);
+new_enemy.transform.parent = enemyContainer.transform;
+yield return new WaitForSeconds(5.0f);
+
+
+}
+}
+
+ IEnumerator SpawnBonusRoutine()
+   {
+      while (_stopspawning == false)
+      {
+         Vector3 position = new Vector3(Random.Range(-9.4f,9.4f),7.4f,0);
+         Instantiate(tripleShotBonusPrefab,position,Quaternion.identity);
+         yield return new WaitForSeconds(3.0f);
+      }
+
+   }
+    void Start()
+    {
+       StartCoroutine(SpawnEnemyRoutine());  
+       StartCoroutine(SpawnBonusRoutine());  
+
+    }
+
+    void Update()
+    {
+
+
+
+
+    }
+
+  
+    public void OnPlayerDeath()
+    {
+    _stopspawning = true; // Oyuncu öldüğünde spawn işlemini durdur
+    }
+
+   
+
+  
+
+
+}
