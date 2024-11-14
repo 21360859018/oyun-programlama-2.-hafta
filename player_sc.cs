@@ -6,6 +6,7 @@ public class Player_sc : MonoBehaviour
 {
    [SerializeField]
    private float _speed=3.5f;
+   float speedMultiplier =2;
 
    [SerializeField] // Değişkenin görünür olması için SerializeField ekleniyor
    private GameObject laserPrefab; // Private olarak değiştirildi
@@ -21,6 +22,8 @@ public class Player_sc : MonoBehaviour
    Spawn_Maneger_sc spawn_Maneger_sc ;  // değişken tanımladık
 
     bool isTripleShotActive = false;
+   bool    isSpeedBonusActive = false;
+
     [SerializeField]
     GameObject tripleShotPrefab;
 
@@ -123,13 +126,26 @@ public void ActivateTripleShot()
    StartCoroutine(TripleShotBonusDisableRoutine());  
 
 }
+public void ActivateSpeedBonus()
+{
+   isSpeedBonusActive = true;
+   _speed *= speedMultiplier;
+   StartCoroutine(SpeedBonusDisableRoutine());
 
+}
 IEnumerator TripleShotBonusDisableRoutine()
 {
 
 yield return new WaitForSeconds(5.0f);
 isTripleShotActive = false;
 
+}
+
+IEnumerator SpeedBonusDisableRoutine()
+{
+   yield return new WaitForSeconds(5.0f);
+   speedMultiplier /= speedMultiplier;
+   isSpeedBonusActive = false;
 }
 
 
