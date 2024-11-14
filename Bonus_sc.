@@ -6,6 +6,11 @@ public class Bonus_sc : MonoBehaviour
 {
     
     float speed=3;
+
+    [SerializeField]
+    int bonusid;
+
+    
     void Start()
     {
         // kodlar bonus nesnesi üzerinde etki sahibi olacak
@@ -30,9 +35,26 @@ public class Bonus_sc : MonoBehaviour
        Player_sc player_sc =  other.transform.GetComponent<Player_sc>();
        if(player_sc != null)
        {
-        player_sc.ActivateTripleShot();
-       }
-        Destroy(this.gameObject);
+          switch (bonusid)
+          {
+
+             case 0:
+                player_sc.ActivateTripleShot();
+                break;
+            case 1:     
+                player_sc.ActivateSpeedBonus();
+                break;
+            case 2:
+                 Debug.Log("speed");
+                break;
+            default:
+                 Debug.Log("speed");
+                break;      
+          }  
+
+
+
+        
     }
   
 
@@ -48,4 +70,5 @@ public class Bonus_sc : MonoBehaviour
 
 
 
+}
 }
